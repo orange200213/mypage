@@ -1,0 +1,14 @@
+# Cloudflare がサイトのアセットとして読み込む対象から外すもの
+# （.gitignore と同じ書式で、リポジトリ直下からの相対パスで指定）
+.git
+.github
+.gitignore
+.assetsignore
+
+# ルート直下に置いた作業用の素材（サイトでは images/ 配下のものだけ使う）
+/*.mp4
+/*.jpg
+/*.jpeg
+
+# サイトで使っていない源流データ
+/images/Gemini_Generated_*

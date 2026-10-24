@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('darkMode');
+                var dark = saved !== null ? saved === 'true'
+                    : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.toggle('dark-mode', dark);
+            } catch (e) {}
+        })();
+    </script>
+    <meta name="description" content="日起は高品質な靴下の卸売を専門とする企業です。素材とコストパフォーマンスを両立した商品を提供し、数千種類のバリエーションを取り揃えています。">
+    <meta property="og:title" content="Nikki official" />
+    <meta property="og:description" content="日起は高品質な靴下の卸売を専門とする企業です。素材とコストパフォーマンスを両立した商品を提供し、数千種類のバリエーションを取り揃えています。" />	
+    <meta property="og:site_name" content="日起株式会社">
+    <!-- SNS・WeChat 共有用 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://orange200213.github.io/mypage/index.html">
+    <meta property="og:image" content="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:image:alt" content="日起株式会社 高品質な靴下の卸売">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <link rel="image_src" href="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <meta name="thumbnail" content="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <!-- Klee One（FONTWORKS / SIL Open Font License 1.1・セルフホスト） -->
+    <link rel="stylesheet" href="fonts/klee-one/klee-one.css">
+    <!-- 署名用（Yuji Syuku サブセット / SIL Open Font License 1.1） -->
+    <link rel="stylesheet" href="fonts/signature/signature.css">
+    <!-- 更新時は下の ?v= を新しい日付に変更する（ブラウザキャッシュ対策） -->
+    <link rel="stylesheet" href="styles.css?v=20261024">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1b1e2b" media="(prefers-color-scheme: dark)">
+    <meta name="google-site-verification" content="fUEfGxgRoQ_X_atRKzWT7yLI6Kkl03oy4KPgwNDdOPA" />
+
+    <title>日起株式会社</title>
+     <script type="application/ld+json">
+    {
+      "@context" : "https://schema.org",
+      "@type" : "WebSite",
+      "name" : "日起株式会社",
+      "alternateName": ["日起", "株式会社日起"],
+      "url" : "https://www.nikki.ec.cc/"
+    }
+  </script>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+                <div class="logo">
+                    <span class="logo-brand">日起</span>
+                </div>
+
+                <nav id="main-nav" class="main-nav" aria-label="主要ナビゲーション">
+                    <ul>
+                        <li><a href="index.html">ホーム</a></li>
+                        <li><a href="about.html">会社概要</a></li>
+                        <li><a href="message.html">代表メッセージ</a></li>
+                        <li><a href="item.html">最新情報</a></li>
+                        <li><a href="contact.html">お問い合わせ</a></li>
+                    </ul>
+                </nav>
+                <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="メニュー切替">
+                        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </button>
+                        <div class="header-actions">
+                            <button id="theme-toggle" class="theme-toggle" aria-label="夜間モード切り替え" title="夜間モード">
+                            <span class="theme-icon">🌙</span>
+                            </button>
+                            <button id="theme-toggle-mobile" class="theme-toggle mobile-only" aria-label="夜間モード切り替え" title="夜間モード">
+                                <span class="theme-icon">🌙</span>
+                            </button>
+                    
+                        </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <picture class="hero-media">
+                    <source media="(max-width: 640px)" srcset="images/main-vi-sp.jpg">
+                    <img src="images/main-vi.jpg" alt="店頭に並ぶ靴下の数々" loading="lazy">
+                </picture>
+
+                <a class="hero-peek" href="#company-image">
+                    気になる？様子を見よう！
+                    <span class="hero-peek-arrow" aria-hidden="true">↓</span>
+                </a>
+
+                <div class="hero-overlay">
+                    <h1>高品質な靴下の卸売</h1>
+                    <p>素材とコストパフォーマンスを両立した商品を提供します。</p>
+                    <a href="contact.html" class="btn hero-cta">
+                        お問い合わせ
+                        <span class="hero-cta-arrow" aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="stats" aria-label="会社の概要">
+                <div class="stats-grid">
+                    <div class="stat">
+                        <span class="stat-value">5<small>拠点</small></span>
+                        <span class="stat-label">大阪・奈良</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">数千<small>種類</small></span>
+                        <span class="stat-label">靴下のバリエーション</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">4<small>シーズン</small></span>
+                        <span class="stat-label">常時在庫</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">OEM<small>対応</small></span>
+                        <span class="stat-label">相談可能</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="services" class="services">
+                <h2>会社サービス</h2>
+                <div class="cards">
+                    <article class="card">
+                        <h3>靴下卸売</h3>
+                        <ul>
+                            <li>数千種類のバリエーションを取り揃え</li>
+                            <li>四季を通じて在庫あり</li>
+                        </ul>
+                    </article>
+
+                    <article class="card">
+                        <h3>アパレル関連</h3>
+                        <ul>
+                            <li>シャツ、ベスト、ズボン等を幅広く取扱</li>
+                            <li>OEM対応も相談可能</li>
+                        </ul>
+                    </article>
+
+                    <article class="card">
+                        <h3>品質管理</h3>
+                        <ul>
+                            <li>工場直結のサプライチェーン</li>
+                            <li>品質チェックを徹底</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section class="message-teaser" aria-labelledby="message-teaser-quote">
+                <figure class="message-teaser-portrait">
+                    <picture>
+                        <source srcset="images/shacho-message.webp" type="image/webp">
+                        <img src="images/shacho-message.jpg" alt="代表取締役 李歓" width="760" height="760" loading="lazy" decoding="async">
+                    </picture>
+                </figure>
+
+                <div class="message-teaser-body">
+                    <p class="message-teaser-label">Message</p>
+                    <h2 id="message-teaser-quote" class="message-teaser-quote">“毎日の、あたりまえに寄り添う。”</h2>
+                    <p class="message-teaser-text">靴下は、毎日の暮らしに欠かせない存在です。だからこそ、素材の心地よさ、履き心地、丈夫さ、そして手に取りやすい価格に、私たちは妥協しません。</p>
+                    <p class="message-teaser-text">関わるすべての人が、少しずつ幸せになっていくこと。それが、日起株式会社の願いです。</p>
+                    <a class="message-teaser-link" href="message.html">代表メッセージを読む</a>
+                </div>
+                <div class="message-teaser-sign">
+                    <span class="message-teaser-role">代表取締役</span>
+                    <span class="message-teaser-name">李 歓</span>
+                </div>
+            </section>
+
+            <section class="company-info">
+                <div class="gallery-row">
+                    
+                    <aside class="company-visual">
+                        <h2>会社案内</h2>
+                        <p class="muted">こちらは会社拠点一覧です。</p>
+                    </aside>
+                    
+                    <div class="company-info-content">
+                        <table class="location-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">エリア</th>
+                                    <th scope="col">拠点名</th>
+                                    <th scope="col">住所</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="area-chip">大阪府</span></td>
+                                    <td>本社</td>
+                                    <td>大阪府大東市深野3丁目21-3</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="area-chip">大阪府</span></td>
+                                    <td>大阪営業所</td>
+                                    <td>大阪府大阪市中央区平野町1-6-8メロディハイム平野町508室</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="area-chip">大阪府</span></td>
+                                    <td>北条倉庫</td>
+                                    <td>大阪府大東市北条2丁目18-6</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="area-chip">大阪府</span></td>
+                                    <td>平野屋</td>
+                                    <td>大阪府大東市平野屋新町3-3</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="area-chip">奈良県</span></td>
+                                    <td>奈良倉庫</td>
+                                    <td>奈良県奈良市都祁友田町189-1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="company-image" class="company-image">
+                <!-- 会社イメージ（本社オフィス写真＋商品・倉庫の映像） -->
+                <div class="gallery-row">
+                    <aside class="company-visual">
+                        <h2>会社イメージ</h2>
+                        <p class="company-hint">
+                            <svg class="company-hint-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z" fill="currentColor"/>
+                                <path d="M15.6 8.7a4.6 4.6 0 0 1 0 6.6M18.1 6.2a8.1 8.1 0 0 1 0 11.6"
+                                      fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                            再生ボタンを押すと音声が流れます。
+                        </p>
+                        <p class="muted">本社オフィス、取扱商品、お取引先との商談、倉庫の様子をご紹介します。映像は再生ボタンから拡大プレーヤーでご覧いただけます。</p>
+                    </aside>
+
+                    <div class="company-media">
+                        <div class="media-group">
+                            <h3 class="media-group-title">本社オフィス</h3>
+                            <p class="media-group-desc">大阪府大東市に本社を構えています。工場やお取引先との連絡、商品情報の共有、納期の調整など、日々の業務をこのオフィスから行っています。</p>
+                            <div class="gallery gallery-single">
+                                <figure>
+                                    <img src="images/455.jpeg" alt="本社オフィスの執務スペース" loading="lazy">
+                                    <figcaption>本社オフィス（大阪府大東市）</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="media-group">
+                            <h3 class="media-group-title">商品展示</h3>
+                            <p class="media-group-desc">本社には、数千種類の靴下をはじめとする商品を展示しています。定番品から季節の新作まで、実際に手に取って素材や履き心地をご確認いただけます。アパレル商品もあわせてご覧いただけます。（靴下ラインナップ・陳列棚の映像は現在準備中です）</p>
+                            <div class="gallery gallery-video">
+                                <figure class="is-unavailable">
+                                    <video poster="images/poster-shohin-lineup.jpg"
+                                           loop playsinline muted preload="none"
+                                           aria-label="靴下ラインナップの映像（準備中）"></video>
+                                    <p class="gallery-badge">準備中</p>
+                                    <figcaption>靴下ラインナップ</figcaption>
+                                </figure>
+                                <figure class="is-unavailable">
+                                    <video poster="images/poster-shohin-rack.jpg"
+                                           loop playsinline muted preload="none"
+                                           aria-label="靴下・タイツ陳列棚の映像（準備中）"></video>
+                                    <p class="gallery-badge">準備中</p>
+                                    <figcaption>靴下・タイツ 陳列棚</figcaption>
+                                </figure>
+                                <figure>
+                                    <video src="videos/shohin-apparel.mp4?v=3" poster="images/poster-shohin-apparel.jpg"
+                                           controls loop playsinline muted preload="none"
+                                           aria-label="アパレル商品の映像"></video>
+                                    <button type="button" class="video-play" aria-label="アパレル商品の映像を再生"></button>
+                                    <figcaption>アパレル商品</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="media-group">
+                            <h3 class="media-group-title">取引実況</h3>
+                            <p class="media-group-desc">お取引先との商談の様子です。実際にサンプルを手に取っていただきながら、素材や仕様、数量、納期などを細かくすり合わせたうえで、ご提案しています。</p>
+                            <div class="gallery gallery-photo">
+                                <figure>
+                                    <img src="images/torihiki-meeting.jpg" alt="お取引先との商談の様子" loading="lazy">
+                                    <figcaption>お取引先との商談</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="images/torihiki-sample.jpg" alt="商品サンプルの確認の様子" loading="lazy">
+                                    <figcaption>商品サンプルの確認</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="images/torihiki-discussion.jpg" alt="打ち合わせの様子" loading="lazy">
+                                    <figcaption>打ち合わせの様子</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="media-group">
+                            <h3 class="media-group-title">倉庫展示</h3>
+                            <p class="media-group-desc">大阪府大東市の倉庫では、四季を通じて安定供給できるよう豊富な在庫を確保しています。コンテナで到着した商品は、搬入口で数量と外装を確認してから荷降ろしし、検品・仕分けを経てパレット単位で棚に保管します。入荷から出荷までの流れを、3つの映像でご紹介します。</p>
+                            <div class="gallery gallery-video">
+                                <figure>
+                                    <video src="videos/nyuka-shukka.mp4?v=3" poster="images/poster-nyuka-shukka.jpg"
+                                           controls loop playsinline muted preload="none"
+                                           aria-label="コンテナー入庫様子の映像"></video>
+                                    <button type="button" class="video-play" aria-label="コンテナー入庫様子の映像を再生"></button>
+                                    <figcaption>コンテナー入庫様子</figcaption>
+                                    <p class="gallery-note">コンテナで届いた商品を、荷台から台車で降ろして搬入口へ運び入れる様子です。</p>
+                                </figure>
+                                <figure>
+                                    <video src="videos/shukka-genba.mp4?v=3" poster="images/poster-shukka-genba.jpg"
+                                           controls loop playsinline muted preload="none"
+                                           aria-label="出荷現場の映像"></video>
+                                    <button type="button" class="video-play" aria-label="出荷現場の映像を再生"></button>
+                                    <figcaption>出荷現場</figcaption>
+                                    <p class="gallery-note">出荷を待つ商品が並ぶヤードで、商品を台車に載せて運び、トラックへ積み込む様子です。</p>
+                                </figure>
+                                <figure>
+                                    <video src="videos/soko-naikan.mp4?v=3" poster="images/poster-soko-naikan.jpg"
+                                           controls loop playsinline muted preload="none"
+                                           aria-label="倉庫内覧の映像"></video>
+                                    <button type="button" class="video-play" aria-label="倉庫内覧の映像を再生"></button>
+                                    <figcaption>倉庫内覧</figcaption>
+                                    <p class="gallery-note">パレットに積み上げた在庫を、通路ごとに整理して保管している様子です。日々の入出庫はフォークリフトで行っています。</p>
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="media-group">
+                            <h3 class="media-group-title">オフィス</h3>
+                            <p class="media-group-desc">本社の執務スペースです。受発注の管理や在庫の確認、お取引先とのやり取りをここで行っています。サンプル確認用の広いテーブルがあり、実際に商品を広げて素材や履き心地を確かめられます。</p>
+                            <div class="gallery gallery-duo">
+                                <figure>
+                                    <img src="images/honsha1.jpg" alt="サンプルを広げて確認できる執務スペース" loading="lazy">
+                                    <figcaption>サンプル確認スペース</figcaption>
+                                </figure>
+                                <figure>
+                                    <img src="images/honsha3.jpg" alt="デスクと書棚が並ぶ事務所内観" loading="lazy">
+                                    <figcaption>事務所内観</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact-cta">
+                <div class="contact-cta-inner">
+                    <h2>お問い合わせ</h2>
+                    <p class="cta-contact">TEL：072-869-6577　FAX：072-869-6588</p>
+                    <div class="cta-actions">
+                        <a href="contact.html" class="btn">お問い合わせ</a>
+                        <a href="#company-image" class="btn btn-outline">会社イメージを見る</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="access" aria-labelledby="access-title">
+                <h2 id="access-title">アクセス</h2>
+                <div class="access-inner">
+                    <div class="access-map">
+                        <!-- APIキーを取得した場合は Google Maps Embed API に差し替え可
+                             https://www.google.com/maps/embed/v1/place?key=API_KEY&q=...&language=ja&region=JP -->
+                        <iframe
+                            src="https://www.google.com/maps?q=34.7189961,135.6298955&z=17&hl=ja&output=embed"
+                            title="日起株式会社 本社の地図（Googleマップ）"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="access-info">
+                        <h3>本社</h3>
+                        <p class="access-address">〒574-0072　大阪府大東市深野3丁目21-3</p>
+                        <p class="access-tel">TEL：072-869-6577<br>FAX：072-869-6588</p>
+                        <a class="access-link" href="https://maps.app.goo.gl/AT7P1XMDkQnx96UX8" target="_blank" rel="noopener">Googleマップで開く</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <nav class="footer-nav" aria-label="フッターナビゲーション">
+                <a href="index.html">ホーム</a>
+                <a href="about.html">会社概要</a>
+                <a href="message.html">代表メッセージ</a>
+                <a href="item.html">最新情報</a>
+                <a href="contact.html">お問い合わせ</a>
+            </nav>
+            <div class="footer-info">
+                <p>日起株式会社</p>
+                <p>〒574-0072　大阪府大東市深野3丁目21-3</p>
+                <p>TEL：072-869-6577　FAX：072-869-6588</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js?v=20261024"></script>
+</body>
+</html>
+
+

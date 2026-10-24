@@ -1,0 +1,13 @@
+# ルート直下に置いた素材動画はローカル専用（サイトには公開しない）
+/*.mp4
+
+# ルート直下に置いた素材写真も同じくローカル専用（images/ 配下のみ公開）
+/*.jpg
+/*.jpeg
+/*.png
+
+# Cloudflare 用のビルド成果物
+dist/
+
+# ローカル専用の素材（サイトでは裁切後の main-vi-sp.jpg のみ使用）
+/images/Gemini_Generated_*

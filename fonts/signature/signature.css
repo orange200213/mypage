@@ -1,0 +1,9 @@
+/* Yuji Syuku — 署名用サブセット（李・歓のみ / SIL Open Font License 1.1） */
+@font-face {
+    font-family: 'Yuji Syuku';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./files/yuji-syuku-likan.woff2) format('woff2');
+    unicode-range: U+674e, U+6b53;
+}
