@@ -788,6 +788,8 @@ h4 {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     margin: 0;
+    /* カードは中身の高さに合わせる（隣の長い説明文で引き伸ばさない） */
+    align-items: start;
 }
 
 .gallery figure {
@@ -835,10 +837,7 @@ h4 {
 }
 
 /* 写真の並びに混ぜる映像カード（大きさは写真と同じマス目に合わせる） */
-.gallery figure.video-item {
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-}
+.gallery figure.video-item { display: grid; }
 
 .gallery figure.video-item > video { grid-area: 1 / 1; }
 .gallery figure.video-item > figcaption { grid-area: 2 / 1; }
@@ -864,11 +863,7 @@ h4 {
 }
 
 /* 再生前は静止画＋再生ボタンの見た目にする */
-.gallery-video figure {
-    display: grid;
-    /* 3行目（補足説明）はカード下端まで伸ばして背景を揃える */
-    grid-template-rows: auto auto 1fr;
-}
+.gallery-video figure { display: grid; }
 
 .gallery-video figure > video { grid-area: 1 / 1; }
 
@@ -983,8 +978,8 @@ h4 {
 }
 
 /* 映像カードの補足説明（figcaption の下に続ける） */
-.gallery-video figure > .gallery-note {
-    grid-area: 3 / 1;
+/* カード下の補足説明（共通の見た目） */
+.gallery .gallery-note {
     margin: 0;
     padding: 0 12px 12px;
     font-size: 12px;
@@ -993,6 +988,8 @@ h4 {
     text-align: left;
     background: #fdf9fb;
 }
+
+.gallery-video figure > .gallery-note { grid-area: 3 / 1; }
 
 .lightbox {
     position: fixed;
@@ -2171,7 +2168,7 @@ h3,
     color: var(--muted);
 }
 
-:root.dark-mode .gallery-video figure > .gallery-note {
+:root.dark-mode .gallery .gallery-note {
     background: #252a3c;
     color: var(--muted);
 }
