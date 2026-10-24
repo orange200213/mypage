@@ -36,7 +36,7 @@
     <!-- 署名用（Yuji Syuku サブセット / SIL Open Font License 1.1） -->
     <link rel="stylesheet" href="fonts/signature/signature.css">
     <!-- 更新時は下の ?v= を新しい日付に変更する（ブラウザキャッシュ対策） -->
-    <link rel="stylesheet" href="styles.css?v=20261024">
+    <link rel="stylesheet" href="styles.css?v=20261024b">
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -270,7 +270,7 @@
 
                         <div class="media-group">
                             <h3 class="media-group-title">商品展示</h3>
-                            <p class="media-group-desc">本社には、数千種類の靴下をはじめとする商品を展示しています。定番品から季節の新作まで、実際に手に取って素材や履き心地をご確認いただけます。アパレル商品もあわせてご覧いただけます。（靴下ラインナップ・陳列棚の映像は現在準備中です）</p>
+                            <p class="media-group-desc">本社には、数千種類の靴下をはじめとする商品を展示しています。定番品から季節の新作まで、実際に手に取って素材や履き心地をご確認いただけます。アパレル商品もあわせてご覧いただけます。（靴下ラインナップの映像は現在準備中です）</p>
                             <div class="gallery gallery-video">
                                 <figure class="is-unavailable">
                                     <video poster="images/poster-shohin-lineup.jpg"
@@ -279,12 +279,13 @@
                                     <p class="gallery-badge">準備中</p>
                                     <figcaption>靴下ラインナップ</figcaption>
                                 </figure>
-                                <figure class="is-unavailable">
-                                    <video poster="images/poster-shohin-rack.jpg"
-                                           loop playsinline muted preload="none"
-                                           aria-label="靴下・タイツ陳列棚の映像（準備中）"></video>
-                                    <p class="gallery-badge">準備中</p>
-                                    <figcaption>靴下・タイツ 陳列棚</figcaption>
+                                <figure>
+                                    <video src="videos/shohin-consult.mp4" poster="images/poster-shohin-consult.jpg"
+                                           controls loop playsinline muted preload="none"
+                                           aria-label="商談・ご注文のご相談の映像"></video>
+                                    <button type="button" class="video-play" aria-label="商談・ご注文のご相談の映像を再生"></button>
+                                    <figcaption>商談・ご注文のご相談</figcaption>
+                                    <p class="gallery-note">お客様から「試しに少しだけ」とご相談いただく場面です。まずは在庫品からご案内し、必要に応じて追加生産の日程をご相談します。</p>
                                 </figure>
                                 <figure>
                                     <video src="videos/shohin-apparel.mp4?v=3" poster="images/poster-shohin-apparel.jpg"
@@ -294,6 +295,7 @@
                                     <figcaption>アパレル商品</figcaption>
                                 </figure>
                             </div>
+                            <p class="media-credit">BGM：「Carefree」Kevin MacLeod（incompetech.com）／CC BY 4.0</p>
                         </div>
 
                         <div class="media-group">

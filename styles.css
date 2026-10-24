@@ -945,6 +945,15 @@ h4 {
     color: var(--ink-soft);
 }
 
+/* 素材クレジット（CC BY など表記が必要なもの） */
+.media-credit {
+    max-width: 46em;
+    margin: 10px 0 0;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
 .gallery figcaption {
     padding: 10px 12px;
     font-size: 12.5px;
