@@ -834,6 +834,27 @@ h4 {
     aspect-ratio: 16 / 9;
 }
 
+/* 写真の行のあとに1本だけ置く映像カード（写真と同じカード幅で中央に） */
+.gallery figure.video-item {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 32px) / 3);
+}
+
+.gallery figure.video-item > video { grid-area: 1 / 1; }
+.gallery figure.video-item > figcaption { grid-area: 2 / 1; }
+.gallery figure.video-item > .gallery-note { grid-area: 3 / 1; }
+
+@media (max-width: 980px) {
+    .gallery figure.video-item { width: calc((100% - 16px) / 2); }
+}
+
+@media (max-width: 720px) {
+    .gallery figure.video-item { width: 100%; }
+}
+
 /* 映像カード（縦位置の動画をカード比率でトリミング） */
 .gallery video {
     display: block;
