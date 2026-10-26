@@ -236,12 +236,21 @@ a { color: var(--accent-deep); }
 .hero-slide {
     position: absolute;
     inset: 0;
+    opacity: 0;
+    transition: opacity 1.1s cubic-bezier(.22, .61, .24, 1);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0;
-    transition: opacity 1.1s cubic-bezier(.22, .61, .24, 1);
-    /* 表示中の 1 枚だけアニメーションを動かす（同時に 7 枚動かすと重い） */
+}
+
+/* 画像は背景ではなく <img> で描く（Safari で背景画像の再描画が止まり
+   2 枚目以降が黒くなる問題を避けるため） */
+.hero-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     animation: heroPan 30s cubic-bezier(.22, .61, .24, 1) infinite alternate;
     animation-play-state: paused;
 }
@@ -250,12 +259,16 @@ a { color: var(--accent-deep); }
 .hero-slide-1 {
     background-image: url("images/main-vi.jpg");
     opacity: 1;
-    animation-play-state: running;
-    transform-origin: 30% 40%;
-    animation-duration: 28s;
 }
 
-.hero-slide.is-active { animation-play-state: running; }
+/* 1 枚ずつ寄り方（速さ・向き）を変えて単調にしない */
+.hero-slide-1 img { transform-origin: 30% 40%; animation-duration: 28s; }
+.hero-slide-2 img { transform-origin: 62% 50%; animation-duration: 33s; animation-direction: alternate-reverse; }
+.hero-slide-3 img { transform-origin: 50% 34%; animation-duration: 26s; }
+.hero-slide-4 img { transform-origin: 34% 56%; animation-duration: 35s; animation-direction: alternate-reverse; object-position: 0% 50%; }
+.hero-slide-5 img { transform-origin: 56% 44%; animation-duration: 30s; }
+.hero-slide-6 img { transform-origin: 70% 50%; animation-duration: 27s; animation-direction: alternate-reverse; object-position: 100% 50%; }
+.hero-slide-7 img { transform-origin: 44% 62%; animation-duration: 34s; }
 
 @keyframes heroPan {
     from { transform: scale(1.02); }
@@ -263,15 +276,11 @@ a { color: var(--accent-deep); }
 }
 
 /* JS が動くときは「表示中の 1 枚」だけ表示・再生（同時に何枚も動かさない） */
-.hero-media.slides-ready .hero-slide {
-    opacity: 0;
-    animation-play-state: paused;
-}
+.hero-media.slides-ready .hero-slide { opacity: 0; }
 
-.hero-media.slides-ready .hero-slide.is-active {
-    opacity: 1;
-    animation-play-state: running;
-}
+.hero-media.slides-ready .hero-slide.is-active { opacity: 1; }
+
+.hero-media.slides-ready .hero-slide.is-active img { animation-play-state: running; }
 
 /* スライド切り替えボタン（JS が枚数分を作る） */
 .hero-dots {
@@ -2149,19 +2158,9 @@ h3,
         }
     }
 
-    /* 縦長スマホ用のカット（2 枚目以降は JS が必要な分だけ読み込む） */
+    /* JS が動かないとき用の 1 枚目（縦長カット） */
     .hero-slide-1 { background-image: url("images/mobile-hero-1.jpg"); }
 
-    .hero-slide-2 { transform-origin: 62% 50%; animation-duration: 33s; animation-direction: alternate-reverse; }
-    .hero-slide-3 { transform-origin: 50% 34%; animation-duration: 26s; }
-    .hero-slide-4 { transform-origin: 34% 56%; animation-duration: 35s; animation-direction: alternate-reverse; }
-    .hero-slide-5 { transform-origin: 56% 44%; animation-duration: 30s; }
-    .hero-slide-6 { transform-origin: 70% 50%; animation-duration: 27s; animation-direction: alternate-reverse; }
-    .hero-slide-7 { transform-origin: 44% 62%; animation-duration: 34s; }
-
-    /* JS が動くときは .is-active の 1 枚だけ表示（動かない環境では 1 枚目のまま） */
-    .hero-media.slides-ready .hero-slide { opacity: 0; }
-    .hero-media.slides-ready .hero-slide.is-active { opacity: 1; }
 }
 
 @media (max-width: 640px) {
@@ -2915,15 +2914,15 @@ html.is-loaded .page-loader {
 :root.dark-mode .showcase-hint { color: #ffc2dd; }
 
 /* ---------- 17. モーション配慮 ---------- */
+/* 「軽減」が有効でも動きは残す方針：大きな移動・拡大は止め、
+   フェードやスライドの切り替えは短めに表示する */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: .001ms !important;
-        animation-delay: 0s !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important;
-    }
+    /* スクロールで下から動いてくる部分は、その場でフェードインにする（移動なし） */
+    .js.anim-ready .reveal { translate: none; }
+
+    /* ヒーロー：拡大はかなりゆっくりに、切り替えのフェードはしっかり残す */
+    .hero-slide img { animation-duration: 60s; }
+    .hero-slide { transition-duration: .8s; }
 }

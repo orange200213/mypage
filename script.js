@@ -318,17 +318,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const slideUrl = slide => (portraitQuery.matches ? slide.dataset.tall : slide.dataset.wide) || '';
-    const slidePosition = slide => (portraitQuery.matches ? '' : slide.dataset.posWide || '');
 
-    // 必要な画像だけを都度読み込む（初回に全部取りに行かない）
-    const applySlide = index => {
+    // 画像（<img>）を必要な分だけ読み込む。読み込み・デコードが終わるまで
+    // 表示は切り替えないので、Safari でも途中で黒い画面にならない。
+    const ensureImage = index => {
       const slide = heroSlides[(index + heroSlides.length) % heroSlides.length];
-      if (!slide) return;
-      const url = slideUrl(slide);
-      if (!url || slide.dataset.applied === url) return;
-      slide.dataset.applied = url;
-      slide.style.backgroundImage = 'url("' + url + '")';
-      slide.style.backgroundPosition = slidePosition(slide);
+      const img = slide ? slide.querySelector('img') : null;
+      const url = slide ? slideUrl(slide) : '';
+      if (!img || !url) return Promise.resolve();
+
+      const waitForLoad = () => new Promise(resolve => {
+        let settled = false;
+        const done = () => {
+          if (settled) return;
+          settled = true;
+          resolve();
+        };
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+        // 読み込みが返ってこなくても止まらないようにする保険
+        window.setTimeout(done, 4000);
+      });
+
+      if (img.getAttribute('src') === url) {
+        return img.complete ? Promise.resolve() : waitForLoad();
+      }
+
+      const wait = waitForLoad();
+      img.src = url;
+      return wait;
     };
 
     // 残り時間バーのアニメーションを最初からやり直す
@@ -340,16 +358,25 @@ document.addEventListener('DOMContentLoaded', function () {
       heroProgress.classList.add('is-running');
     };
 
+    let paintToken = 0;
+
     const paintSlide = index => {
-      current = (index + heroSlides.length) % heroSlides.length;
-      applySlide(current);
-      applySlide(current + 1);
-      heroSlides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
-      heroDots.forEach((dot, i) => {
-        dot.classList.toggle('is-active', i === current);
-        dot.setAttribute('aria-current', String(i === current));
+      const target = (index + heroSlides.length) % heroSlides.length;
+      current = target;
+      const token = ++paintToken;
+
+      // 次の 1 枚は先に読み込んでおく
+      ensureImage(target + 1);
+
+      ensureImage(target).then(() => {
+        if (token !== paintToken) return;
+        heroSlides.forEach((slide, i) => slide.classList.toggle('is-active', i === target));
+        heroDots.forEach((dot, i) => {
+          dot.classList.toggle('is-active', i === target);
+          dot.setAttribute('aria-current', String(i === target));
+        });
+        restartProgress(timer !== null);
       });
-      restartProgress(timer !== null);
     };
 
     const stopSlides = () => {
@@ -374,14 +401,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 画面幅・向きが変わったら画像を選び直す
     const onVariantChange = () => {
-      heroSlides.forEach(slide => { delete slide.dataset.applied; });
-      applySlide(current);
-      applySlide(current + 1);
+      paintSlide(current);
       startSlides();
     };
-
-    heroMedia.classList.add('slides-ready');
-    paintSlide(0);
 
     heroDots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
@@ -407,7 +429,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }, { threshold: 0.15 }).observe(heroMedia);
     }
 
-    startSlides();
+    // 1 枚目の画像が用意できてから切り替えを始める（途中で黒くしない）
+    ensureImage(0).then(() => {
+      heroMedia.classList.add('slides-ready');
+      paintSlide(0);
+      startSlides();
+    });
   }
 
   // 拠点切り替え（必要なページのみ）
