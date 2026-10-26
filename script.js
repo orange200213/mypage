@@ -1,4 +1,87 @@
 // 共通 UI: ナビゲーション / アコーディオン / ライトボックス / 夜間モード
+// ページの読み込み中表示と、スクロールに合わせた表示アニメーション
+(function () {
+  const docRoot = document.documentElement;
+  const REVEAL_TARGETS = [
+    'main > section:not(.hero):not(.showcase-hero):not(.showcase-group)',
+    '.showcase-group > h2',
+    '.showcase-group > .showcase-group-desc',
+    '.cards > .card',
+    '.stats .stat',
+    '.message-teaser',
+    '.showcase-teaser-card',
+    '.gallery.showcase-list > figure',
+    '.media-group',
+    '.news-item',
+    '.access-inner',
+    '.contact-cta-inner'
+  ].join(', ');
+
+  // 画面に入った要素を下からふわっと表示する
+  const startReveal = () => {
+    const targets = Array.from(document.querySelectorAll(REVEAL_TARGETS));
+    if (!targets.length) return;
+
+    targets.forEach(el => {
+      el.classList.add('reveal');
+      const siblings = el.parentElement ? Array.from(el.parentElement.children) : [];
+      const index = Math.max(0, siblings.indexOf(el));
+      el.style.setProperty('--reveal-delay', Math.min(index, 5) * 90 + 'ms');
+    });
+
+    docRoot.classList.add('anim-ready');
+
+    const revealAll = () => targets.forEach(el => el.classList.add('is-revealed'));
+
+    if (!('IntersectionObserver' in window)) {
+      revealAll();
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+
+    // 非表示の初期状態を 1 フレーム描画してから監視を始める（アニメーションを効かせるため）
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        targets.forEach(el => observer.observe(el));
+      });
+    });
+  };
+
+  const startedAt = Date.now();
+  let loaderClosed = false;
+
+  const hideLoader = () => {
+    if (loaderClosed) return;
+    loaderClosed = true;
+    // 表示が一瞬で消えるとちらつくので、最低限の表示時間を確保する
+    const wait = Math.max(0, 380 - (Date.now() - startedAt));
+    window.setTimeout(() => {
+      docRoot.classList.add('is-loaded');
+      const loader = document.getElementById('page-loader');
+      if (loader) {
+        loader.setAttribute('aria-hidden', 'true');
+        window.setTimeout(() => { loader.style.display = 'none'; }, 900);
+      }
+      window.setTimeout(startReveal, 260);
+    }, wait);
+  };
+
+  if (document.readyState === 'complete') {
+    hideLoader();
+  } else {
+    window.addEventListener('load', hideLoader);
+    // 読み込みが長引いた場合の保険
+    window.setTimeout(hideLoader, 6000);
+  }
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
   const navToggle = document.getElementById('nav-toggle');
   const mainNav = document.getElementById('main-nav');
@@ -166,9 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
       video.controls = false;
       video.muted = true;
 
-      // 準備中など、再生させないカードはモーダルも開かない
-      if (figure && figure.classList.contains('is-unavailable')) return;
-
       const open = event => {
         if (event) event.preventDefault();
         openModal(video);
@@ -207,6 +287,114 @@ document.addEventListener('DOMContentLoaded', function () {
         first.focus();
       }
     });
+  }
+
+  // ヒーローのスライドショー（縦長スマホのみ）
+  // main-vi.jpg の角度違いカット＋新しい商品写真を、ゆっくり切り替える
+  const hero = document.querySelector('.hero');
+  const heroMedia = document.querySelector('.hero-media');
+  const heroSlides = heroMedia
+    ? Array.from(heroMedia.querySelectorAll('.hero-slide:not(.hero-slide-wide)'))
+    : [];
+  const heroDotBox = document.querySelector('.hero-dots');
+  const heroProgress = document.querySelector('.hero-progress');
+
+  if (heroSlides.length > 1 && heroDotBox) {
+    const portraitQuery = window.matchMedia('(max-width: 720px) and (orientation: portrait)');
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const INTERVAL = 6500;
+    let current = 0;
+    let timer = null;
+    let heroInView = true;
+
+    if (hero) hero.style.setProperty('--hero-interval', INTERVAL + 'ms');
+
+    // 枚数に合わせて切り替えボタンを作る
+    const heroDots = heroSlides.map((slide, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'hero-dot' + (index === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', (index + 1) + '枚目の画像を表示');
+      dot.setAttribute('aria-current', String(index === 0));
+      heroDotBox.appendChild(dot);
+      return dot;
+    });
+
+    // 次に見せる画像だけ先に読み込み、表示した瞬間に空にならないようにする
+    const loadSlide = index => {
+      const slide = heroSlides[(index + heroSlides.length) % heroSlides.length];
+      const url = slide ? slide.getAttribute('data-bg') : '';
+      if (!slide || !url || slide.dataset.loaded === '1') return;
+      slide.dataset.loaded = '1';
+      slide.style.backgroundImage = 'url("' + url + '")';
+    };
+
+    // 残り時間バーのアニメーションを最初からやり直す
+    const restartProgress = running => {
+      if (!heroProgress) return;
+      heroProgress.classList.remove('is-running');
+      if (!running) return;
+      void heroProgress.offsetWidth;
+      heroProgress.classList.add('is-running');
+    };
+
+    const paintSlide = index => {
+      current = (index + heroSlides.length) % heroSlides.length;
+      loadSlide(current);
+      loadSlide(current + 1);
+      heroSlides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
+      heroDots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === current);
+        dot.setAttribute('aria-current', String(i === current));
+      });
+      restartProgress(timer !== null);
+    };
+
+    const stopSlides = () => {
+      if (timer !== null) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const startSlides = () => {
+      stopSlides();
+      if (!portraitQuery.matches || reduceMotionQuery.matches || document.hidden || !heroInView) {
+        restartProgress(false);
+        return;
+      }
+      timer = window.setInterval(() => paintSlide(current + 1), INTERVAL);
+      restartProgress(true);
+    };
+
+    heroMedia.classList.add('slides-ready');
+    paintSlide(0);
+
+    heroDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        paintSlide(index);
+        startSlides();
+      });
+    });
+
+    const onSlideshowChange = () => startSlides();
+    if (typeof portraitQuery.addEventListener === 'function') {
+      portraitQuery.addEventListener('change', onSlideshowChange);
+    }
+    if (typeof reduceMotionQuery.addEventListener === 'function') {
+      reduceMotionQuery.addEventListener('change', onSlideshowChange);
+    }
+    document.addEventListener('visibilitychange', onSlideshowChange);
+
+    // 画面外に出たら止めて、戻ってきたら再開する
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        heroInView = entries[0].isIntersecting;
+        startSlides();
+      }, { threshold: 0.15 }).observe(heroMedia);
+    }
+
+    startSlides();
   }
 
   // 拠点切り替え（必要なページのみ）

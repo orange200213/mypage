@@ -9,6 +9,7 @@
 /*.mp4
 /*.jpg
 /*.jpeg
+/*.heic
 
 # サイトで使っていない源流データ
 /images/Gemini_Generated_*

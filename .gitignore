@@ -5,6 +5,7 @@
 /*.jpg
 /*.jpeg
 /*.png
+/*.heic
 
 # Cloudflare 用のビルド成果物
 dist/

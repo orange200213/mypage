@@ -6,6 +6,7 @@
     <meta name="color-scheme" content="light dark">
     <script>
         (function () {
+            document.documentElement.classList.add('js');
             try {
                 var saved = localStorage.getItem('darkMode');
                 var dark = saved !== null ? saved === 'true'
@@ -35,7 +36,7 @@
     <!-- Klee One（FONTWORKS / SIL Open Font License 1.1・セルフホスト） -->
     <link rel="stylesheet" href="fonts/klee-one/klee-one.css">
     <!-- 更新時は下の ?v= を新しい日付に変更する（ブラウザキャッシュ対策） -->
-    <link rel="stylesheet" href="styles.css?v=20261024e">
+    <link rel="stylesheet" href="styles.css?v=20261026">
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -56,6 +57,15 @@
     <meta name="theme-color" content="#1b1e2b" media="(prefers-color-scheme: dark)">
 </head>
 <body>
+    <!-- 読み込み中のアニメーション（表示は JS が動く環境のみ） -->
+    <div class="page-loader" id="page-loader" role="status" aria-live="polite">
+        <div class="page-loader-inner">
+            <span class="page-loader-brand" aria-hidden="true">日起</span>
+            <span class="page-loader-track" aria-hidden="true"><span class="page-loader-fill"></span></span>
+            <span class="sr-only">ページを読み込んでいます</span>
+        </div>
+    </div>
+
 	<div class="container">
         <header class="site-header">
                 <div class="logo">
@@ -70,6 +80,7 @@
                         <li><a href="about.html">会社概要</a></li>
                         <li><a href="message.html">代表メッセージ</a></li>
                         <li><a href="item.html">最新情報</a></li>
+                        <li><a href="gallery.html">ギャラリー</a></li>
                         <li><a href="contact.html">お問い合わせ</a></li>
                     </ul>
                 </nav>
@@ -97,6 +108,16 @@
             <ul class="news-list">
                 <li class="news-item">
                     <div class="news-meta">
+                        <time class="news-date" datetime="2026-10-26">2026.10.26</time>
+                        <span class="news-tag">サイト更新</span>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">展示ギャラリーを公開しました</h3>
+                        <p class="news-text">会社イメージでご紹介していた本社・商品展示・取引実況・倉庫・オフィスの様子を、専用の展示ギャラリーページにまとめました。1本ずつの映像を、左にプレビュー、右に詳しい説明という形でご覧いただけます。</p>
+                    </div>
+                </li>
+                <li class="news-item">
+                    <div class="news-meta">
                         <time class="news-date" datetime="2026-10-22">2026.10.22</time>
                         <span class="news-tag">サイト更新</span>
                     </div>
@@ -119,7 +140,6 @@
         </section>
     </main>
 
-
     
     <!-- Footer -->
     <footer class="site-footer">
@@ -128,6 +148,7 @@
             <a href="about.html">会社概要</a>
             <a href="message.html">代表メッセージ</a>
             <a href="item.html">最新情報</a>
+            <a href="gallery.html">ギャラリー</a>
             <a href="contact.html">お問い合わせ</a>
         </nav>
             <div class="footer-info">
@@ -137,6 +158,6 @@
         </div>
     </footer>
 </div>	
-    <script src="script.js?v=20261024"></script>
+    <script src="script.js?v=20261026"></script>
 </body>
 </html>

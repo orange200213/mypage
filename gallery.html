@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (function () {
+            document.documentElement.classList.add('js');
+            try {
+                var saved = localStorage.getItem('darkMode');
+                var dark = saved !== null ? saved === 'true'
+                    : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.toggle('dark-mode', dark);
+            } catch (e) {}
+        })();
+    </script>
+    <title>展示ギャラリー | 日起株式会社</title>
+    <meta name="description" content="本社、商品展示、お取引先との商談、倉庫の様子を映像と写真でご紹介します。日起株式会社の展示ギャラリーです。">
+    <meta property="og:title" content="展示ギャラリー | 日起株式会社">
+    <meta property="og:description" content="本社、商品展示、お取引先との商談、倉庫の様子を映像と写真でご紹介します。">
+    <meta property="og:site_name" content="日起株式会社">
+    <!-- SNS・WeChat 共有用 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://orange200213.github.io/mypage/gallery.html">
+    <meta property="og:image" content="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:image:alt" content="日起株式会社 高品質な靴下の卸売">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <link rel="image_src" href="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <meta name="thumbnail" content="https://orange200213.github.io/mypage/images/share-wechat.jpg">
+    <!-- Klee One（FONTWORKS / SIL Open Font License 1.1・セルフホスト） -->
+    <link rel="stylesheet" href="fonts/klee-one/klee-one.css">
+    <!-- 更新時は下の ?v= を新しい日付に変更する（ブラウザキャッシュ対策） -->
+    <link rel="stylesheet" href="styles.css?v=20261026">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1b1e2b" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <!-- 読み込み中のアニメーション（表示は JS が動く環境のみ） -->
+    <div class="page-loader" id="page-loader" role="status" aria-live="polite">
+        <div class="page-loader-inner">
+            <span class="page-loader-brand" aria-hidden="true">日起</span>
+            <span class="page-loader-track" aria-hidden="true"><span class="page-loader-fill"></span></span>
+            <span class="sr-only">ページを読み込んでいます</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <h1><a href="index.html">日起</a></h1>
+            </div>
+            <nav id="main-nav" class="main-nav" aria-label="主要ナビゲーション">
+                <ul>
+                    <li><a href="index.html">ホーム</a></li>
+                    <li><a href="about.html">会社概要</a></li>
+                    <li><a href="message.html">代表メッセージ</a></li>
+                    <li><a href="item.html">最新情報</a></li>
+                    <li><a href="gallery.html">ギャラリー</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+            <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="メニュー切替">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="夜間モード切り替え" title="夜間モード">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button id="theme-toggle-mobile" class="theme-toggle mobile-only" aria-label="夜間モード切り替え" title="夜間モード">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="showcase-hero">
+                <picture>
+                    <!-- 縦長スマホでは縦カバー画像に差し替える（横幅いっぱいの帯では切れすぎるため） -->
+                    <source media="(max-width: 720px) and (orientation: portrait)" srcset="images/cover-socks-sp.webp" type="image/webp">
+                    <source media="(max-width: 720px) and (orientation: portrait)" srcset="images/cover-socks-sp.jpg">
+                    <source srcset="images/cover-socks-wide.webp" type="image/webp">
+                    <img src="images/cover-socks-wide.jpg" alt="棚に並ぶ靴下の数々" width="1600" height="600" fetchpriority="high" decoding="async">
+                </picture>
+                <div class="showcase-hero-body">
+                    <p class="showcase-hero-label">Gallery</p>
+                    <h1>展示ギャラリー</h1>
+                    <p>本社・取扱商品・お取引先との商談・倉庫の様子を、映像と写真でご紹介します。</p>
+                </div>
+            </section>
+
+            <section class="showcase-intro" aria-label="展示ギャラリーのご案内">
+                <p class="company-hint">
+                    <svg class="company-hint-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z" fill="currentColor"/>
+                        <path d="M15.6 8.7a4.6 4.6 0 0 1 0 6.6M18.1 6.2a8.1 8.1 0 0 1 0 11.6"
+                              fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    </svg>
+                    再生ボタンを押すと音声が流れます。
+                </p>
+                <nav class="showcase-jump" aria-label="展示ギャラリー内の目次">
+                    <a href="#honsha">本社</a>
+                    <a href="#shohin">商品展示</a>
+                    <a href="#torihiki">取引実況</a>
+                    <a href="#soko">倉庫展示</a>
+                    <a href="#office">オフィス</a>
+                </nav>
+            </section>
+
+            <section id="honsha" class="showcase-group">
+                <h2>本社</h2>
+                <p class="showcase-group-desc">大阪府大東市に本社を構えています。工場やお取引先との連絡、商品情報の共有、納期の調整など、日々の業務をこのオフィスから行っています。</p>
+                <div class="gallery showcase-list">
+                    <figure>
+                        <img src="images/455.jpeg" alt="本社ビルの外観" width="1440" height="810" loading="lazy" decoding="async">
+                        <figcaption><h3>本社ビル</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>靴下（SOCKS）とファッション（FASHION）の看板が目印の本社ビルです。入荷・受発注の連絡や、お取引先とのやり取りをここから行っています。</p>
+                            <ul class="showcase-meta">
+                                <li>写真</li>
+                                <li>大阪府大東市</li>
+                                <li>外観</li>
+                            </ul>
+                        </div>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="shohin" class="showcase-group">
+                <h2>商品展示</h2>
+                <p class="showcase-group-desc">本社には、数千種類の靴下をはじめとする商品を展示しています。定番品から季節の新作まで、実際に手に取って素材や履き心地をご確認いただけます。アパレル商品もあわせてご覧いただけます。</p>
+                <div class="gallery showcase-list">
+                    <figure>
+                        <video src="videos/shohin-consult.mp4" poster="images/poster-shohin-consult.jpg"
+                               controls loop playsinline muted preload="none"
+                               aria-label="商談・ご注文のご相談の映像"></video>
+                        <button type="button" class="video-play" aria-label="商談・ご注文のご相談の映像を再生"></button>
+                        <figcaption><h3>商談・ご注文のご相談</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>お客様から「試しに少しだけ」とご相談いただく場面です。まずは在庫品からご案内し、必要に応じて追加生産の日程をご相談します。</p>
+                            <p>色柄・サイズ・数量など、ご希望に合わせてサンプルをご用意できます。</p>
+                            <ul class="showcase-meta">
+                                <li>映像</li>
+                                <li>商品展示</li>
+                                <li>商談</li>
+                            </ul>
+                            <p class="showcase-hint">再生ボタンで拡大プレーヤーが開きます</p>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <video src="videos/shohin-apparel.mp4?v=3" poster="images/poster-shohin-apparel.jpg"
+                               controls loop playsinline muted preload="none"
+                               aria-label="アパレル商品の映像"></video>
+                        <button type="button" class="video-play" aria-label="アパレル商品の映像を再生"></button>
+                        <figcaption><h3>アパレル商品</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>シャツ、ベスト、ズボンなど、靴下とあわせてご提案できるアパレル商品の一例です。素材や縫製をご確認いただきながら、ご要望に合わせてご提案します。</p>
+                            <p>OEM（オリジナル商品の企画・製造）のご相談も承っています。</p>
+                            <ul class="showcase-meta">
+                                <li>映像</li>
+                                <li>アパレル</li>
+                                <li>OEM 相談可</li>
+                            </ul>
+                            <p class="showcase-hint">再生ボタンで拡大プレーヤーが開きます</p>
+                        </div>
+                    </figure>
+                </div>
+                <p class="showcase-credit">BGM：「Carefree」Kevin MacLeod（incompetech.com）／CC BY 4.0</p>
+            </section>
+
+            <section id="torihiki" class="showcase-group">
+                <h2>取引実況</h2>
+                <p class="showcase-group-desc">お取引先との商談の様子です。実際にサンプルを手に取っていただきながら、素材や仕様、数量、納期などを細かくすり合わせたうえで、ご提案しています。</p>
+                <div class="gallery showcase-list">
+                    <figure>
+                        <img src="images/torihiki-meeting.jpg" alt="お取引先との商談の様子" width="600" height="800" loading="lazy" decoding="async">
+                        <figcaption><h3>お取引先との商談</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>実際の商品を前に、素材や仕様、数量、納期などをすり合わせている場面です。ご希望の条件をうかがいながら、ご提案のかたちを整えていきます。</p>
+                            <ul class="showcase-meta">
+                                <li>写真</li>
+                                <li>商談</li>
+                            </ul>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <img src="images/torihiki-sample.jpg" alt="商品サンプルの確認の様子" width="600" height="800" loading="lazy" decoding="async">
+                        <figcaption><h3>商品サンプルの確認</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>サンプルを手に取っていただき、履き心地や生地の厚み、色味をご確認いただいています。気になる点はその場でご相談いただけます。</p>
+                            <ul class="showcase-meta">
+                                <li>写真</li>
+                                <li>サンプル確認</li>
+                            </ul>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <img src="images/torihiki-discussion.jpg" alt="打ち合わせの様子" width="600" height="800" loading="lazy" decoding="async">
+                        <figcaption><h3>打ち合わせの様子</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>店内で気軽にご相談いただける雰囲気です。小さなご質問からお気軽にお声がけください。</p>
+                            <ul class="showcase-meta">
+                                <li>写真</li>
+                                <li>打ち合わせ</li>
+                            </ul>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <video src="videos/torihiki-visit.mp4?v=2" poster="images/poster-torihiki-visit.jpg?v=2"
+                               controls loop playsinline muted preload="none"
+                               aria-label="お取引先での商談の映像"></video>
+                        <button type="button" class="video-play" aria-label="お取引先での商談の映像を再生"></button>
+                        <figcaption><h3>お取引先での商談</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>見本をお持ちして、実際の商品をご覧いただきながらご相談しています。お取引先の店頭に並ぶ商品を確認しながら、売れ筋や季節の動きもあわせてお伝えします。</p>
+                            <ul class="showcase-meta">
+                                <li>映像</li>
+                                <li>訪問商談</li>
+                            </ul>
+                            <p class="showcase-hint">再生ボタンで拡大プレーヤーが開きます</p>
+                        </div>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="soko" class="showcase-group">
+                <h2>倉庫展示</h2>
+                <p class="showcase-group-desc">大阪府大東市の倉庫では、四季を通じて安定供給できるよう豊富な在庫を確保しています。コンテナで到着した商品は、搬入口で数量と外装を確認してから荷降ろしし、検品・仕分けを経てパレット単位で棚に保管します。入荷から出荷までの流れを、3つの映像でご紹介します。</p>
+                <div class="gallery showcase-list">
+                    <figure>
+                        <video src="videos/nyuka-shukka.mp4?v=3" poster="images/poster-nyuka-shukka.jpg"
+                               controls loop playsinline muted preload="none"
+                               aria-label="コンテナー入庫様子の映像"></video>
+                        <button type="button" class="video-play" aria-label="コンテナー入庫様子の映像を再生"></button>
+                        <figcaption><h3>コンテナー入庫様子</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>コンテナで届いた商品を、荷台から台車で降ろして搬入口へ運び入れる様子です。</p>
+                            <p>数量と外装を確認してから荷降ろしし、検品・仕分けを行っています。</p>
+                            <ul class="showcase-meta">
+                                <li>映像</li>
+                                <li>入庫</li>
+                            </ul>
+                            <p class="showcase-hint">再生ボタンで拡大プレーヤーが開きます</p>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <video src="videos/shukka-genba.mp4?v=3" poster="images/poster-shukka-genba.jpg"
+                               controls loop playsinline muted preload="none"
+                               aria-label="出荷現場の映像"></video>
+                        <button type="button" class="video-play" aria-label="出荷現場の映像を再生"></button>
+                        <figcaption><h3>出荷現場</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>出荷を待つ商品が並ぶヤードで、商品を台車に載せて運び、トラックへ積み込む様子です。</p>
+                            <p>ご注文の数量と納期に合わせて、丁寧に梱包して出荷しています。</p>
+                            <ul class="showcase-meta">
+                                <li>映像</li>
+                                <li>出荷</li>
+                            </ul>
+                            <p class="showcase-hint">再生ボタンで拡大プレーヤーが開きます</p>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <video src="videos/soko-naikan.mp4?v=3" poster="images/poster-soko-naikan.jpg"
+                               controls loop playsinline muted preload="none"
+                               aria-label="倉庫内覧の映像"></video>
+                        <button type="button" class="video-play" aria-label="倉庫内覧の映像を再生"></button>
+                        <figcaption><h3>倉庫内覧</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>パレットに積み上げた在庫を、通路ごとに整理して保管している様子です。日々の入出庫はフォークリフトで行っています。</p>
+                            <p>四季を通じて安定供給できるよう、季節商品も含めて豊富な在庫を確保しています。</p>
+                            <ul class="showcase-meta">
+                                <li>映像</li>
+                                <li>保管</li>
+                                <li>大阪府大東市</li>
+                            </ul>
+                            <p class="showcase-hint">再生ボタンで拡大プレーヤーが開きます</p>
+                        </div>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="office" class="showcase-group">
+                <h2>オフィス</h2>
+                <p class="showcase-group-desc">本社の執務スペースです。受発注の管理や在庫の確認、お取引先とのやり取りをここで行っています。サンプル確認用の広いテーブルがあり、実際に商品を広げて素材や履き心地を確かめられます。</p>
+                <div class="gallery showcase-list">
+                    <figure>
+                        <img src="images/honsha1.jpg" alt="サンプルを広げて確認できる執務スペース" width="1280" height="720" loading="lazy" decoding="async">
+                        <figcaption><h3>サンプル確認スペース</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>サンプルを広げて確認できる広いテーブルがあります。素材や履き心地を実際に確かめながら、商品をお選びいただけます。</p>
+                            <ul class="showcase-meta">
+                                <li>写真</li>
+                                <li>サンプル確認</li>
+                            </ul>
+                        </div>
+                    </figure>
+
+                    <figure>
+                        <img src="images/honsha3.jpg" alt="デスクと書棚が並ぶ事務所内観" width="1280" height="720" loading="lazy" decoding="async">
+                        <figcaption><h3>事務所内観</h3></figcaption>
+                        <div class="showcase-body">
+                            <p>デスクと書棚が並ぶ事務所内観です。受発注の管理や在庫の確認、お取引先とのやり取りをここで行っています。</p>
+                            <ul class="showcase-meta">
+                                <li>写真</li>
+                                <li>事務所</li>
+                            </ul>
+                        </div>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="contact-cta">
+                <div class="contact-cta-inner">
+                    <h2>お問い合わせ</h2>
+                    <p class="cta-contact">TEL：072-869-6577　FAX：072-869-6588</p>
+                    <div class="cta-actions">
+                        <a href="contact.html" class="btn">お問い合わせ</a>
+                        <a href="index.html" class="btn btn-outline">ホームに戻る</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <nav class="footer-nav" aria-label="フッターナビゲーション">
+                <a href="index.html">ホーム</a>
+                <a href="about.html">会社概要</a>
+                <a href="message.html">代表メッセージ</a>
+                <a href="item.html">最新情報</a>
+                <a href="gallery.html">ギャラリー</a>
+                <a href="contact.html">お問い合わせ</a>
+            </nav>
+            <div class="footer-info">
+                <p>日起株式会社</p>
+                <p>〒574-0072　大阪府大東市深野3丁目21-3</p>
+                <p>TEL：072-869-6577　FAX：072-869-6588</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js?v=20261026"></script>
+</body>
+</html>
