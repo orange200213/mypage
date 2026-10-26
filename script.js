@@ -87,10 +87,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const mainNav = document.getElementById('main-nav');
 
   // 現在のページをナビゲーションで強調
-  const currentPage = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  // （/about と /about.html、/ と /index のどちらでも一致させる）
+  const pageKey = path => {
+    const file = (path || '').split('/').pop().split(/[?#]/)[0];
+    return (file.replace(/\.html?$/i, '') || 'index').toLowerCase();
+  };
+  const currentPage = pageKey(location.pathname);
   document.querySelectorAll('.main-nav a').forEach(link => {
-    const href = (link.getAttribute('href') || '').toLowerCase();
-    if (href && href === currentPage) {
+    const href = link.getAttribute('href');
+    if (!href || href.charAt(0) === '#') return;
+    if (pageKey(href) === currentPage) {
       link.classList.add('active');
       link.setAttribute('aria-current', 'page');
     }
@@ -104,6 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
       mainNav.classList.toggle('show', open);
       navToggle.classList.toggle('open', open);
       navToggle.setAttribute('aria-expanded', String(open));
+      // 全画面メニューの裏側がスクロールしないようにする
+      document.body.classList.toggle('menu-open', open);
     };
 
     navToggle.addEventListener('click', () => {
@@ -114,9 +122,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.target.closest('a')) setMenu(false);
     });
 
+    // リンク以外（メニューの余白・画面のあいた部分）をタップしたら閉じる
     document.addEventListener('click', e => {
       if (!isMenuOpen()) return;
-      if (mainNav.contains(e.target) || navToggle.contains(e.target)) return;
+      if (navToggle.contains(e.target)) return;
+      if (e.target.closest('#main-nav a')) return;
+      // 夜間モードの切り替えは閉じずにそのまま使えるようにする
+      if (e.target.closest('.header-actions')) return;
       setMenu(false);
     });
 

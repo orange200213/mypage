@@ -1991,24 +1991,31 @@ h3,
 
     .nav-toggle { display: block; }
 
+    /* 全画面メニュー。
+       優先度は「①お問い合わせ（唯一の塗りボタン・親指の届く下端）＞
+       ②主要4ページ（大きく左寄せ）＞③ホーム（補助の小さいチップ）」。
+       現在地は「淡い色＋左のアクセントバー」で示し、塗りのグラデーションは
+       お問い合わせだけに使う。"今いる場所"と"押す場所"を色で混同させない。 */
     .main-nav {
-        position: absolute;
-        top: calc(100% + 10px);
-        left: 4px;
-        right: 4px;
-        display: block;
-        margin-left: 0;
-        padding: 10px;
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        /* 上はヘッダー分を空ける（ヘッダーはこの面の上に残す） */
+        padding: 84px 16px calc(20px + env(safe-area-inset-bottom));
         background: #ffffff;
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        box-shadow: 0 20px 44px rgba(16, 24, 40, 0.16);
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        overflow-y: auto;
+        overscroll-behavior: contain;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transform: translateY(-8px) scaleY(.98);
-        transform-origin: top center;
-        transition: opacity .2s ease, transform .2s ease, visibility .2s;
+        transform: translateY(-12px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
     }
 
     .main-nav.show {
@@ -2018,15 +2025,141 @@ h3,
         transform: none;
     }
 
-    .main-nav ul { flex-direction: column; gap: 4px; }
+    /* 開いている間はヘッダーの枠を消して、白い面と地続きに見せる */
+    .site-header:has(.main-nav.show) {
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    /* ロゴ・夜間モード・ハンバーガーはメニューより前面に残す */
+    .logo,
+    .header-actions,
+    .nav-toggle { position: relative; z-index: 2; }
+
+    body.menu-open { overflow: hidden; }
+
+    .main-nav ul {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* リストの見出し（HTMLを触らずに追加） */
+    .main-nav ul::before {
+        content: "メニュー";
+        display: block;
+        margin: 0 0 6px 16px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .18em;
+        color: var(--muted);
+    }
 
     .main-nav a {
         display: block;
-        padding: 12px 14px;
-        font-size: 14px;
-        text-align: center;
-        border-radius: 12px;
+        padding: 0;
+        font-size: 16px;
+        color: var(--ink);
+        text-align: left;
+        border-radius: 14px;
     }
+
+    /* ②主要4ページ：タップ領域を60px以上にして左右に振り分ける */
+    .main-nav li:not(:first-child):not(:last-child) a {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 60px;
+        padding: 0 16px;
+    }
+
+    .main-nav li:not(:first-child):not(:last-child) a::after {
+        content: "";
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        border-radius: 1px;
+        opacity: .45;
+        transform: rotate(-45deg);
+    }
+
+    /* 現在地：淡い色＋左のバー（塗りのグラデーションは使わない） */
+    .main-nav a.active,
+    .main-nav a[aria-current="page"] {
+        background: rgba(255, 119, 169, 0.1);
+        color: var(--accent-deep);
+        font-weight: 700;
+    }
+
+    .main-nav li:not(:first-child):not(:last-child) a.active::before,
+    .main-nav li:not(:first-child):not(:last-child) a[aria-current="page"]::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 16px;
+        bottom: 16px;
+        width: 3px;
+        border-radius: 3px;
+        background: var(--accent);
+    }
+
+    /* ③ホーム：補助なので小さいチップに留める（お問い合わせと競わせない） */
+    .main-nav li:first-child a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        margin: 0 0 12px 8px;
+        padding: 0 16px;
+        font-size: 13px;
+        color: var(--muted);
+        background: var(--bg);
+        border-radius: 999px;
+    }
+
+    .main-nav li:first-child a.active,
+    .main-nav li:first-child a[aria-current="page"] {
+        color: var(--accent-deep);
+        background: var(--accent-soft);
+        font-weight: 700;
+    }
+
+    /* ①お問い合わせ：この画面で唯一の塗りボタン。下端に固定する */
+    .main-nav li:last-child {
+        margin-top: auto;
+        padding-top: 20px;
+    }
+
+    .main-nav li:last-child a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 56px;
+        padding: 0 22px;
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        background: linear-gradient(135deg, #ff90b9, #ff6ea4);
+        border-radius: 999px;
+        box-shadow: 0 10px 24px rgba(255, 119, 169, 0.42);
+    }
+
+    .main-nav li:last-child a::after {
+        content: "→";
+        font-size: 15px;
+    }
+
+    /* お問い合わせが現在地のときは矢印をチェックに変える（塗りは維持） */
+    .main-nav li:last-child a.active::after,
+    .main-nav li:last-child a[aria-current="page"]::after { content: "✓"; }
 
     .theme-toggle { display: none; }
     .theme-toggle.mobile-only { display: grid; }
@@ -2942,4 +3075,44 @@ html.is-loaded .page-loader {
     /* ヒーロー：拡大はかなりゆっくりに、切り替えのフェードはしっかり残す */
     .hero-slide img { animation-duration: 60s; }
     .hero-slide { transition-duration: .8s; }
+
+    /* 全画面メニューはすべらせず即座に出す */
+    .main-nav { transform: none; transition: opacity .12s ease, visibility .12s; }
+}
+
+/* ---------- 18. スマホ全画面メニューの夜間モード ---------- */
+@media (max-width: 720px) {
+    /* 現在地は淡い塗りだけに抑え、塗りグラデーションはお問い合わせ専用にする */
+    :root.dark-mode .main-nav a.active,
+    :root.dark-mode .main-nav a[aria-current="page"] {
+        background: rgba(255, 119, 169, 0.16);
+        color: #ffd0e3;
+    }
+
+    :root.dark-mode .main-nav li:first-child a {
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    :root.dark-mode .main-nav li:first-child a.active,
+    :root.dark-mode .main-nav li:first-child a[aria-current="page"] {
+        color: #ffd0e3;
+        background: rgba(255, 119, 169, 0.16);
+    }
+
+    :root.dark-mode .main-nav li:last-child a {
+        color: #fff;
+        background: linear-gradient(135deg, #ff90b9, #ff6ea4);
+    }
+}
+
+/* 横持ちなど高さの低いスマホ：1画面に収まるよう詰める */
+@media (max-width: 720px) and (max-height: 560px) {
+    .main-nav { padding-top: 64px; }
+    .main-nav ul::before { display: none; }
+    .main-nav li:not(:first-child):not(:last-child) a { min-height: 46px; }
+    .main-nav li:first-child { margin-bottom: 6px; }
+    .main-nav li:first-child a { min-height: 34px; }
+    .main-nav li:last-child { padding-top: 12px; }
+    .main-nav li:last-child a { min-height: 46px; }
 }
