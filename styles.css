@@ -2719,10 +2719,8 @@ html.is-loaded .page-loader {
 .gallery.showcase-list > figure {
     display: grid;
     grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-        "media title"
-        "media body";
+    /* 説明文はメディアの高さの中央に置く（上下に 1fr の空きを均等に割り当てる） */
+    grid-template-rows: 1fr auto auto 1fr;
     column-gap: 24px;
     row-gap: 4px;
     margin: 0;
@@ -2742,12 +2740,15 @@ html.is-loaded .page-loader {
 
 .gallery.showcase-list > figure > video,
 .gallery.showcase-list > figure > img {
-    grid-area: media;
+    grid-area: 1 / 1 / -1 / 2;
     display: block;
+    /* 行の高さいっぱいに伸ばさず、指定した比率のまま置く */
+    align-self: start;
     width: 100%;
     height: auto;
     aspect-ratio: 3 / 4;
     object-fit: cover;
+    object-position: center 45%;
     border-radius: 12px;
     background: #10131c;
 }
@@ -2758,11 +2759,13 @@ html.is-loaded .page-loader {
 }
 
 /* 映像はカード内では再生せず、拡大プレーヤーを開く（共通スタイルを継承） */
-.gallery.showcase-list > figure > .video-play { grid-area: media; }
+.gallery.showcase-list > figure > .video-play {
+    grid-area: 1 / 1 / -1 / 2;
+    place-self: center;
+}
 
 .gallery.showcase-list > figure > figcaption {
-    grid-area: title;
-    align-self: end;
+    grid-area: 2 / 2;
     margin: 0;
     padding: 0;
     text-align: left;
@@ -2778,7 +2781,7 @@ html.is-loaded .page-loader {
 }
 
 .showcase-body {
-    grid-area: body;
+    grid-area: 3 / 2;
     min-width: 0;
 }
 
@@ -2842,28 +2845,32 @@ html.is-loaded .page-loader {
 
     .showcase-hero img { height: clamp(200px, 52vw, 280px); }
 
+    /* 左のサムネイルは画面幅に対する割合で決める。
+       128px 固定のままだと説明文が 1 行 12 文字ほどになり、折り返しが窮屈になるため */
     .gallery.showcase-list > figure {
-        grid-template-columns: minmax(0, 128px) minmax(0, 1fr);
+        grid-template-columns: minmax(0, clamp(108px, 40%, 148px)) minmax(0, 1fr);
         column-gap: 13px;
-        padding: 12px;
+        padding: 11px;
         border-radius: 16px;
     }
 
     .gallery.showcase-list > figure > .video-play {
-        width: 44px;
-        height: 44px;
-        background-size: 16px 16px;
+        width: 40px;
+        height: 40px;
+        background-size: 15px 15px;
     }
 
-    .showcase-list figcaption h3 { font-size: 14.5px; }
+    .showcase-list figcaption h3 { font-size: 15px; }
 
     .showcase-body > p {
-        margin: 4px 0 10px;
-        font-size: 12.5px;
-        line-height: 1.8;
+        margin: 4px 0 9px;
+        font-size: 13px;
+        line-height: 1.85;
     }
 
-    .showcase-meta li { padding: 3px 9px; font-size: 10.5px; }
+    .showcase-meta { gap: 6px; }
+
+    .showcase-meta li { padding: 2px 9px; font-size: 10.5px; }
 
     .showcase-hint { display: none; }
 }
@@ -2871,18 +2878,28 @@ html.is-loaded .page-loader {
 /* 小さめのスマートフォン：プレビューを細くして、右の説明文の幅を確保する */
 @media (max-width: 360px) {
     .gallery.showcase-list > figure {
-        grid-template-columns: minmax(0, 104px) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 100px) minmax(0, 1fr);
         column-gap: 11px;
         padding: 10px;
     }
 
-    .showcase-body > p { font-size: 12px; }
+    .showcase-body > p { font-size: 12.5px; }
 }
 
 @media (max-width: 720px) and (orientation: portrait) {
     .showcase-hero img {
         height: clamp(230px, 60vw, 330px);
         object-position: center 34%;
+    }
+
+    /* 縦長スマホ：サムネイルを説明文の高さに合わせて伸ばす。
+       比率を固定すると、文章量の多いカードで画像だけ小さく浮いてしまうため */
+    .gallery.showcase-list > figure > video,
+    .gallery.showcase-list > figure > img {
+        align-self: stretch;
+        height: 100%;
+        min-height: 108px;
+        max-height: 190px;
     }
 }
 
