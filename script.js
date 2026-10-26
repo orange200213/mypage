@@ -289,19 +289,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ヒーローのスライドショー（縦長スマホのみ）
-  // main-vi.jpg の角度違いカット＋新しい商品写真を、ゆっくり切り替える
+  // ヒーローのスライドショー（スマホ・PC どちらでも自動で切り替える）
+  // 画面幅に合わせて 3:4 のカット／3:1 の帯を選び、表示中の 1 枚と次の 1 枚だけを読み込む
   const hero = document.querySelector('.hero');
   const heroMedia = document.querySelector('.hero-media');
-  const heroSlides = heroMedia
-    ? Array.from(heroMedia.querySelectorAll('.hero-slide:not(.hero-slide-wide)'))
-    : [];
+  const heroSlides = heroMedia ? Array.from(heroMedia.querySelectorAll('.hero-slide')) : [];
   const heroDotBox = document.querySelector('.hero-dots');
   const heroProgress = document.querySelector('.hero-progress');
 
   if (heroSlides.length > 1 && heroDotBox) {
     const portraitQuery = window.matchMedia('(max-width: 720px) and (orientation: portrait)');
-    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const INTERVAL = 6500;
     let current = 0;
     let timer = null;
@@ -320,13 +317,18 @@ document.addEventListener('DOMContentLoaded', function () {
       return dot;
     });
 
-    // 次に見せる画像だけ先に読み込み、表示した瞬間に空にならないようにする
-    const loadSlide = index => {
+    const slideUrl = slide => (portraitQuery.matches ? slide.dataset.tall : slide.dataset.wide) || '';
+    const slidePosition = slide => (portraitQuery.matches ? '' : slide.dataset.posWide || '');
+
+    // 必要な画像だけを都度読み込む（初回に全部取りに行かない）
+    const applySlide = index => {
       const slide = heroSlides[(index + heroSlides.length) % heroSlides.length];
-      const url = slide ? slide.getAttribute('data-bg') : '';
-      if (!slide || !url || slide.dataset.loaded === '1') return;
-      slide.dataset.loaded = '1';
+      if (!slide) return;
+      const url = slideUrl(slide);
+      if (!url || slide.dataset.applied === url) return;
+      slide.dataset.applied = url;
       slide.style.backgroundImage = 'url("' + url + '")';
+      slide.style.backgroundPosition = slidePosition(slide);
     };
 
     // 残り時間バーのアニメーションを最初からやり直す
@@ -340,8 +342,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const paintSlide = index => {
       current = (index + heroSlides.length) % heroSlides.length;
-      loadSlide(current);
-      loadSlide(current + 1);
+      applySlide(current);
+      applySlide(current + 1);
       heroSlides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
       heroDots.forEach((dot, i) => {
         dot.classList.toggle('is-active', i === current);
@@ -357,14 +359,25 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     };
 
+    // タブが裏に回った／画面外の間は止める
+    const canRun = () => !document.hidden && heroInView;
+
     const startSlides = () => {
       stopSlides();
-      if (!portraitQuery.matches || reduceMotionQuery.matches || document.hidden || !heroInView) {
+      if (!canRun()) {
         restartProgress(false);
         return;
       }
       timer = window.setInterval(() => paintSlide(current + 1), INTERVAL);
       restartProgress(true);
+    };
+
+    // 画面幅・向きが変わったら画像を選び直す
+    const onVariantChange = () => {
+      heroSlides.forEach(slide => { delete slide.dataset.applied; });
+      applySlide(current);
+      applySlide(current + 1);
+      startSlides();
     };
 
     heroMedia.classList.add('slides-ready');
@@ -377,14 +390,14 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    const onSlideshowChange = () => startSlides();
     if (typeof portraitQuery.addEventListener === 'function') {
-      portraitQuery.addEventListener('change', onSlideshowChange);
+      portraitQuery.addEventListener('change', onVariantChange);
+    } else if (typeof portraitQuery.addListener === 'function') {
+      portraitQuery.addListener(onVariantChange);
     }
-    if (typeof reduceMotionQuery.addEventListener === 'function') {
-      reduceMotionQuery.addEventListener('change', onSlideshowChange);
-    }
-    document.addEventListener('visibilitychange', onSlideshowChange);
+
+    document.addEventListener('visibilitychange', startSlides);
+    window.addEventListener('pageshow', startSlides);
 
     // 画面外に出たら止めて、戻ってきたら再開する
     if ('IntersectionObserver' in window) {

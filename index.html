@@ -111,18 +111,30 @@
 
         <main>
             <section class="hero">
-                <!-- カバー画像：横長は main-vi.jpg。縦長スマホは main-vi.jpg の角度違いカットと
-                     新しい商品写真を順に切り替えるスライドショーにする。
-                     2 枚目以降の画像は JS が data-bg から読み込む（初回表示を軽くするため）。 -->
+                <!-- カバー画像：縦長スマホは 3:4 のカット、横長では 3:1 の帯に差し替える。
+                     画像は JS が「いま見せている 1 枚＋次の 1 枚」だけ読み込む。 -->
                 <div class="hero-media" role="img" aria-label="店頭に並ぶ靴下の数々">
-                    <span class="hero-slide hero-slide-wide"></span>
-                    <span class="hero-slide hero-slide-1" data-bg="images/mobile-hero-1.jpg"></span>
-                    <span class="hero-slide hero-slide-2" data-bg="images/mobile-hero-2.jpg"></span>
-                    <span class="hero-slide hero-slide-3" data-bg="images/mobile-hero-3.jpg"></span>
-                    <span class="hero-slide hero-slide-4" data-bg="images/mobile-hero-4.jpg"></span>
-                    <span class="hero-slide hero-slide-5" data-bg="images/mobile-hero-5.jpg"></span>
-                    <span class="hero-slide hero-slide-6" data-bg="images/mobile-hero-6.jpg"></span>
-                    <span class="hero-slide hero-slide-7" data-bg="images/mobile-hero-7.jpg"></span>
+                    <span class="hero-slide hero-slide-1"
+                          data-wide="images/main-vi.jpg" data-pos-wide="50% 50%"
+                          data-tall="images/mobile-hero-1.jpg"></span>
+                    <span class="hero-slide hero-slide-2"
+                          data-wide="images/hero-wide-2.jpg"
+                          data-tall="images/mobile-hero-2.jpg"></span>
+                    <span class="hero-slide hero-slide-3"
+                          data-wide="images/hero-wide-3.jpg"
+                          data-tall="images/mobile-hero-3.jpg"></span>
+                    <span class="hero-slide hero-slide-4"
+                          data-wide="images/main-vi.jpg" data-pos-wide="0% 50%"
+                          data-tall="images/mobile-hero-4.jpg"></span>
+                    <span class="hero-slide hero-slide-5"
+                          data-wide="images/hero-wide-5.jpg"
+                          data-tall="images/mobile-hero-5.jpg"></span>
+                    <span class="hero-slide hero-slide-6"
+                          data-wide="images/main-vi.jpg" data-pos-wide="100% 50%"
+                          data-tall="images/mobile-hero-6.jpg"></span>
+                    <span class="hero-slide hero-slide-7"
+                          data-wide="images/hero-wide-7.jpg"
+                          data-tall="images/mobile-hero-7.jpg"></span>
                 </div>
 
                 <!-- 自動切り替えの残り時間（スライドショー中だけ表示） -->
